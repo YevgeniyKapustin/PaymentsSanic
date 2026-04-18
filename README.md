@@ -34,7 +34,7 @@ docker compose up --build
 ```
 
 - API will be available at http://localhost:8000.
-x
+
 ## Run Locally
 
 1. Create a PostgreSQL database named `payments`.
