@@ -1,0 +1,17 @@
+.idea/
+.vscode/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.venv/
+.env
+.poetry_cache/
+.pytest_cache/
+.coverage
+htmlcov/
+.mypy_cache/
+.pylint.d/
+.cache/
+*.log
+coverage.xml
