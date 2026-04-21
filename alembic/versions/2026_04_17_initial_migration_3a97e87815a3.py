@@ -108,9 +108,9 @@ def upgrade() -> None:
         sa.text(
             "INSERT INTO users (email, full_name, password_hash, role) VALUES "
             "('user@example.com', 'Test User', "
-            "  '$2b$12$DcpzltqXV5CoL6saTR//AeHf/46wJXXTm/TeN.n.ktdd6mcVYabfG', 'USER'::user_role), "
+            "  '$2b$12$9xhm2KuN7MsU4PtRqIrSReTpvQ7JPuXUJ3ZXkqDW64pc/2uLD7ojK', 'USER'::user_role), "
             "('admin@example.com', 'Test Admin', "
-            "  '$2b$12$mGTLC/3OVkroVTiLzPMSSOzfe.PO5okUE1s22a7ibjvaxG.XlAGBi', 'ADMIN'::user_role)"
+            "  '$2b$12$mM3ra3qmNnjoDuNDm1cNmO9368A4hRUakR0qkmGD9E5bvpk1R3C6W', 'ADMIN'::user_role)"
         )
     )
     op.execute(sa.text("INSERT INTO accounts (user_id, balance) VALUES (1, 0.00)"))

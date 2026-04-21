@@ -1,6 +1,5 @@
 import logging
 from collections.abc import AsyncIterator
-from functools import lru_cache
 
 from sqlalchemy.ext.asyncio import (
     AsyncEngine,
@@ -23,21 +22,20 @@ class DatabaseManager:
     replacement for testing.
     """
 
+    _instance = None
+
+    def __new__(cls, *args, **kwargs):
+        if cls._instance is None:
+            cls._instance = super().__new__(cls)
+        return cls._instance
+
     def __init__(self) -> None:
-        self._engine: AsyncEngine | None = None
-        self._sessionmaker: async_sessionmaker[AsyncSession] | None = None
-
-    async def init(self) -> None:
-        """Initialize the async engine and sessionmaker if not already done."""
-        if self._engine is not None and self._sessionmaker is not None:
-            return
-
         settings = get_settings()
         logger.info("Initializing database engine")
-        self._engine = create_async_engine(
+        self._engine: AsyncEngine = create_async_engine(
             settings.database.database_url, future=True, pool_pre_ping=True
         )
-        self._sessionmaker = async_sessionmaker(
+        self._sessionmaker: async_sessionmaker[AsyncSession] = async_sessionmaker(
             self._engine,
             expire_on_commit=False,
             class_=AsyncSession,
@@ -48,9 +46,6 @@ class DatabaseManager:
         if self._engine is not None:
             logger.info("Disposing database engine")
             await self._engine.dispose()
-
-        self._engine = None
-        self._sessionmaker = None
 
     def get_sessionmaker(self) -> async_sessionmaker[AsyncSession]:
         """Return the initialized sessionmaker or raise if not initialized."""
@@ -70,7 +65,6 @@ class DatabaseManager:
             yield session
 
 
-@lru_cache
 def get_database_manager() -> DatabaseManager:
     """Return a singleton DatabaseManager instance."""
     return DatabaseManager()

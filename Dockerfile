@@ -1,11 +1,15 @@
 FROM python:3.12-slim
 
+WORKDIR /app
+
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
-WORKDIR /app
+RUN pip install --no-cache-dir poetry==2.3.2
 
-COPY . .
-RUN pip install --no-cache-dir .
+COPY pyproject.toml poetry.lock* /app/
 
-CMD ["python", "run.py"]
+RUN poetry config virtualenvs.create false \
+    && poetry install --only main --no-root --no-interaction --no-ansi
+
+COPY . /app

@@ -84,10 +84,10 @@ class SanicApplicationBuilder:
     def _register_lifecycle(application: Sanic) -> None:
         """Register application lifecycle hooks (start/stop) to manage resources."""
 
-        @application.main_process_start
-        async def init_database(_application: Sanic) -> None:
-            await get_database_manager().init()
+        @application.before_server_start
+        async def init_database(app, loop):
+            get_database_manager()
 
-        @application.main_process_stop
-        async def dispose_database(_application: Sanic) -> None:
+        @application.after_server_stop
+        async def dispose_database(app, loop):
             await get_database_manager().dispose()

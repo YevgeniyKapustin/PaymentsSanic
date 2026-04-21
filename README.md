@@ -87,10 +87,24 @@ poetry run pytest --cov
 
 ```json
 {
-  "transaction_id": "5eae174f-7cd0-472c-bd36-35660f00132b",
+  "transaction_id": "tx_001",
   "user_id": 1,
-  "account_id": 1,
-  "amount": 100,
-  "signature": "7b47e41efe564a062029da3367bde8844bea0fb049f894687cee5d57f2858bc8"
+  "account_id": 10,
+  "amount": 150,
+  "signature": "4ff5c81fa28ad74f8bdaea652405d773ad0cde5d6f0fd27100f8421885397b38"
 }
+```
+
+Admin
+```
+email: admin@example.com
+password: admin123
+role: ADMIN
+```
+
+User
+```
+email: user@example.com
+password: user123
+role: USER
 ```
